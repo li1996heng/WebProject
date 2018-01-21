@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<!-- 配置数据源，采用Druid连接池 -->
+	<bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName"
+			value="com.microsoft.sqlserver.jdbc.SQLServerDriver">
+		</property>
+		<property name="url"
+			value="jdbc:sqlserver://localhost:1433;databaseName=IMS">
+		</property>
+		<property name="username" value="sa"></property>
+		<property name="password" value="liheng"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="druidDataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.SQLServerDialect
+				</prop>
+				<prop key="hibernate.show_sql">
+					true
+				</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/hgzy/entity/UserTab.hbm.xml</value>
+				<value>com/hgzy/entity/ShopTab.hbm.xml</value>
+				<value>com/hgzy/entity/FoodTab.hbm.xml</value>
+				<value>com/hgzy/entity/CourseTab.hbm.xml</value>
+				<value>com/hgzy/entity/LibraryTab.hbm.xml</value>
+				<value>com/hgzy/entity/ClassroomTab.hbm.xml</value>
+				<value>com/hgzy/entity/StoreTab.hbm.xml</value>
+				<value>com/hgzy/entity/PlayTab.hbm.xml</value>
+				<value>com/hgzy/entity/BickTab.hbm.xml</value>
+				<value>com/hgzy/entity/MovieTab.hbm.xml</value>
+				<value>com/hgzy/entity/BusTab.hbm.xml</value></list>
+		</property></bean>
+		
+	
+	
+	
+	<!-- 注入service -->
+	<bean id="UserTabService" class="com.hgzy.service.Impl.UserTabServiceImpl">
+		<property name="userDAO" ref="UserTabDAO"/>
+	</bean>
+	<bean id="FoodTabService" class="com.hgzy.service.Impl.FoodTabServiceImpl">
+		<property name="foodDao" ref="FoodTabDAO"></property>
+	</bean>
+	<bean id="ShopTabService" class="com.hgzy.service.Impl.ShopTabServiceImpl">
+		<property name="shopDao" ref="ShopTabDAO"></property>
+	</bean>
+	<bean id="CourseTabService" class="com.hgzy.service.Impl.CourseTabServiceImpl">
+		<property name="courseDao" ref="CourseTabDAO"></property>
+	</bean>
+	<bean id="LibraryTabService" class="com.hgzy.service.Impl.LibraryTabServiceImpl">
+		<property name="libraryDao" ref="LibraryTabDAO"></property>
+	</bean>
+	<bean id="ClassroomTabService" class="com.hgzy.service.Impl.ClassroomTabServiceImpl">
+		<property name="classroomDao" ref="ClassroomTabDAO"></property>
+	</bean>
+	<bean id="StoreTabService" class="com.hgzy.service.Impl.StoreTabServiceImpl">
+		<property name="storeDao" ref="StoreTabDAO"></property>
+	</bean>
+	<bean id="BickTabService" class="com.hgzy.service.Impl.BickTabServiceImpl">
+		<property name="bickDao" ref="BickTabDAO"></property>
+	</bean>
+	<bean id="BusTabService" class="com.hgzy.service.Impl.BusTabServiceImpl">
+		<property name="busDao" ref="BusTabDAO"></property>
+	</bean>
+	<bean id="MovieTabService" class="com.hgzy.service.Impl.MovieTabServiceImpl">
+		<property name="movieDao" ref="MovieTabDAO"></property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	<!-- 注入Action -->
+	<bean id="UserAction" class="com.hgzy.action.UserAction">
+		<property name="userService" ref="UserTabService"/>
+	</bean>
+	<bean id="FoodAction" class="com.hgzy.action.FoodAction">
+		<property name="foodService" ref="FoodTabService"/>
+		<property name="shopService" ref="ShopTabService"/>
+	</bean>
+	<bean id="ShopAction" class="com.hgzy.action.ShopAction">
+		<property name="shopService" ref="ShopTabService"/>
+	</bean>
+	<bean id="CourseAction" class="com.hgzy.action.CourseAction">
+		<property name="courseService" ref="CourseTabService"/>
+	</bean>
+	<bean id="LibraryAction" class="com.hgzy.action.LibraryAction">
+		<property name="libraryService" ref="LibraryTabService"/>
+	</bean>
+	<bean id="ClassroomAction" class="com.hgzy.action.ClassroomAction">
+		<property name="classroomService" ref="ClassroomTabService"/>
+	</bean>
+	<bean id="StoreAction" class="com.hgzy.action.StoreAction">
+		<property name="storeService" ref="StoreTabService"/>
+	</bean>
+	<bean id="BickAction" class="com.hgzy.action.BickAction">
+		<property name="bickService" ref="BickTabService"/>
+	</bean>
+	<bean id="BusAction" class="com.hgzy.action.BusAction">
+		<property name="busService" ref="BusTabService"/>
+	</bean>
+	<bean id="MovieAction" class="com.hgzy.action.MovieAction">
+		<property name="movieService" ref="MovieTabService"/>
+	</bean>
+	
+	
+	
+	
+	
+	
+	<!-- 事物声明 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" read-only="false"/>
+			<tx:method name="delete*" read-only="false"/>
+			<tx:method name="update*" read-only="false"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config proxy-target-class="true">
+		<aop:pointcut expression="execution(* com.hgzy.service.Impl.*.*(..))" id="aopP"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="aopP"/>
+	</aop:config>
+	
+	
+	
+	<!-- 注入DAO -->
+	<bean id="UserTabDAO" class="com.hgzy.dao.Impl.UserTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ShopTabDAO" class="com.hgzy.dao.Impl.ShopTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FoodTabDAO" class="com.hgzy.dao.Impl.FoodTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CourseTabDAO" class="com.hgzy.dao.Impl.CourseTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="LibraryTabDAO" class="com.hgzy.dao.Impl.LibraryTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ClassroomTabDAO"
+		class="com.hgzy.dao.Impl.ClassroomTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="PlayTabDAO" class="com.hgzy.dao.Impl.PlayTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="StoreTabDAO" class="com.hgzy.dao.Impl.StoreTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="BickTabDAO" class="com.hgzy.dao.Impl.BickTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="BusTabDAO" class="com.hgzy.dao.Impl.BusTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="MovieTabDAO" class="com.hgzy.dao.Impl.MovieTabDAOImpl">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+</beans>

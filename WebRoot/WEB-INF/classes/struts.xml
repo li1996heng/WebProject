@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	
+	<!-- 开发者模式 -->
+	<constant name="struts.devMode" value="false"/>
+	<!-- 指定Web应用的默认编码集 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	
+	<!-- 处理Action notFound  接管404界面 -->
+	<package name="error" extends="struts-default">
+		<default-action-ref name="notFound" />
+		<action name="notFound">
+			<result>/error.jsp</result>
+		</action>
+	</package>
+	
+	
+	<package name="p" extends="struts-default" namespace="/">
+		<action name="user_*" class="UserAction" method="{1}">
+			<result name="loginsuccess" type="redirect">/main.jsp</result>
+			<result name="input" type="redirect">/login.jsp</result>
+			<result name="register" type="redirect">/login.jsp</result>
+			<result name="fail" type="redirect">/fail.jsp</result>
+			<result name="welcome" type="redirect">/welcome.jsp</result>
+			<result name="editsuccess">/editUser.jsp</result>
+			<result name="updatesuccess" type="redirect">/login.jsp</result>
+		</action>
+		<action name="food_*" class="FoodAction" method="{1}">
+			<result name="listsuccess">/right.jsp</result>
+			<result name="likesuccess">/right.jsp</result>
+			<result name="inputsuccess">/addfood.jsp</result>
+			<result name="editsuccess">/editfood.jsp</result>
+			<result name="addsuccess" type="redirectAction">food_list.action</result>
+			<result name="deletesuccess" type="redirectAction">food_list.action</result>
+			<result name="updatesuccess" type="redirectAction">food_list.action</result>
+		</action>
+		<action name="course_*" class="CourseAction" method="{1}">
+			<result name="listsuccess">/courseList.jsp</result>
+		</action>
+		<action name="library_*" class="LibraryAction" method="{1}">
+			<result name="listsuccess">/libraryList.jsp</result>
+			<result name="likesuccess">/libraryList.jsp</result>
+		</action>
+		<action name="classroom_*" class="ClassroomAction" method="{1}">
+			<result name="listsuccess">/classroomList.jsp</result>
+			<result name="likesuccess">/classroomList.jsp</result>
+		</action>
+		<action name="store_*" class="StoreAction" method="{1}">
+			<result name="listsuccess">/storeList.jsp</result>
+		</action>
+		<action name="bick_*" class="BickAction" method="{1}">
+			<result name="listsuccess">/bickList.jsp</result>
+			<result name="likesuccess">/bickList.jsp</result>
+		</action>
+		<action name="bus_*" class="BusAction" method="{1}">
+			<result name="listsuccess">/busList.jsp</result>
+		</action>
+		<action name="movie_*" class="MovieAction" method="{1}">
+			<result name="listsuccess">/movieList.jsp</result>
+		</action>
+		<action name="desc_*" class="com.hgzy.action.DescAction"
+			method="{1}">
+			<result name="kbs" type="redirect">https://www.ele.me/shop/159325176</result>
+			<result name="lzlm" type="redirect">https://www.ele.me/shop/158169387</result>
+			<result name="dhct" type="redirect">https://www.ele.me/shop/898589</result>
+			<result name="lssj" type="redirect">https://www.ele.me/shop/703502</result>
+			<result name="htl" type="redirect">https://www.ele.me/shop/785107</result>
+			<result name="cqmlt" type="redirect">https://www.ele.me/shop/1451860</result>
+			<result name="jdhmj" type="redirect">https://www.ele.me/shop/249230</result>
+			<result name="wxsk" type="redirect">https://www.ele.me/shop/419009</result>
+			<result name="tlcy" type="redirect">https://www.ele.me/shop/157692778</result>
+			<result name="aokang" type="redirect">http://maoyan.com/cshop/1550912/</result>
+			<result name="dadi" type="redirect">http://maoyan.com/cshop/6864555/</result>
+			<result name="aimusi" type="redirect">http://hg.meituan.com/xiuxianyule/157792963/</result>
+			<result name="other">/other.jsp</result>
+		</action>
+	</package>
+</struts>    
